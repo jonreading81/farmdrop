@@ -1,0 +1,1 @@
+export const API_ENDPOINT = 'https://staging-graphql-gateway.farmdrop.com/graphql';
