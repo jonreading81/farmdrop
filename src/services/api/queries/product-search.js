@@ -22,6 +22,13 @@ const query = `{
         measurement {
           displayName
         }
+        price {
+          pence
+        }
+        saleText
+        salePrice {
+          pence
+        }
       }
       saleText
       price {

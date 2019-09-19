@@ -1,7 +1,7 @@
 import React from 'react';
 
 interface ILoaderProps {
-  text: String
+  text: string
 };
 
 const Loader: React.FC<ILoaderProps> = ({text}) => (

@@ -22,6 +22,7 @@ describe('Product Grid', () => {
       );
     expect(context.find(Loader)).to.have.length(1);
     expect(context.find(Loader).prop('text')).to.equal('Loading Products');
+    expect(context.find(ProductGrid)).to.have.length(0);
   });
 
   it('should show a error when isError', () => {
@@ -33,6 +34,7 @@ describe('Product Grid', () => {
       );
     expect(context.find(ErrorMessage)).to.have.length(1);
     expect(context.find(ErrorMessage).prop('text')).to.equal('Error Loading Products');
+    expect(context.find(ProductGrid)).to.have.length(0);
   });
 
   it('should display a ProductCard for each product', () => {
