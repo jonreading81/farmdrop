@@ -37,4 +37,6 @@ npm run test
 - GraphQL
 - Jest
 - Enzyme
-- Polished
+- Sinon
+- Chai
+
