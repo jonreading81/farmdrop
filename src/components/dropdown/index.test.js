@@ -1,6 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import Dropdown, {StyledSelect} from './index';
+import Dropdown from './index';
+import  {StyledSelect} from './styles';
 import sinon from 'sinon';
 
 describe('Dropdown component', () => {
@@ -23,8 +24,8 @@ describe('Dropdown component', () => {
     expect(context.find('option')).to.have.length(2);
   });
 
-  it('should add selected to the option with value specified', () => {
-    expect(context.find('option').at(1).prop('selected')).to.be.true;
+  it('should add the value attrubute to the select box', () => {
+    expect(context.find(StyledSelect).prop('value')).to.eql(props.value);
   });
 
   it('should trigger change event when item selected', () => {

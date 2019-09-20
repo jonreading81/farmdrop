@@ -1,6 +1,7 @@
 import React from 'react';
 import {shallow} from 'enzyme';
-import Image, {StyledImage} from './index';
+import Image from './index';
+import {StyledImage, StyledTag, StyledOverlay} from './styles';
 
 describe('Image Component', () => {
   let context;
@@ -15,14 +16,14 @@ describe('Image Component', () => {
   });
 
   it('should set image url', () => {
-    expect(context.find(StyledImage).prop('src')).to.equal(props.url);
+    expect(context.find(StyledImage).prop('url')).to.equal(props.url);
   });
 
   it('should set the tag', () => {
-    expect(context.find('.image__tag').text()).to.equal(props.tag);
+    expect(context.find(StyledTag).text()).to.equal(props.tag);
   });
 
   it('should set the overlaytext', () => {
-    expect(context.find('.image__overlay').text()).to.equal(props.overlayText);
+    expect(context.find(StyledOverlay).text()).to.equal(props.overlayText);
   })
 });

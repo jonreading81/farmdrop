@@ -1,21 +1,19 @@
 import React from 'react';
-import styled from 'styled-components';
+import {StyledImage, StyledOverlay, StyledTag} from './styles';
 
 interface IImageProps {
   url: string,
   tag?: string,
-  overlayText?: string,
+  showOverlay: Boolean,
+  overlayText: string,
 };
 
-export const StyledImage = styled.img`
-  max-width: 100%;
-`;
-
-const Image: React.FC<IImageProps> = ({url, tag, overlayText}) => (
-  <div>
-    <StyledImage  src={url} />
-    {tag && <span className="image__tag">{tag}</span>}
-    {overlayText && <span className="image__overlay">{overlayText}</span>}
+const Image: React.FC<IImageProps> = ({url, tag, overlayText, showOverlay}) => (
+  <div className="image">
+    <StyledImage  url={url} >
+      {tag && <StyledTag>{tag}</StyledTag>}
+      {<StyledOverlay showOverlay={showOverlay} >{overlayText}</StyledOverlay>}
+    </StyledImage>
   </div>
 );
 

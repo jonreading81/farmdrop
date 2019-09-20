@@ -3,11 +3,9 @@ import {
   GET_PRODUCTS_REQUEST,
   GET_PRODUCTS_SUCCESS,
   GET_PRODUCTS_ERROR,
-  SELECT_PRODUCT_VARIANT,
   IGetProductsRequestAction,
   IGetProductsSuccessAction,
   IGetProductsErrorAction,
-  ISelectProductVariantAction,
   IProduct
 } from '../types/product';
 
@@ -26,13 +24,5 @@ export const getProductsErrorAction: ActionCreator<IGetProductsErrorAction> = (m
   type: GET_PRODUCTS_ERROR,
   payload: {
     msg
-  }
-});
-
-export const selectProductVariantAction: ActionCreator<ISelectProductVariantAction> = (productId: number, variantId: number) => ({
-  type: SELECT_PRODUCT_VARIANT,
-  payload: {
-    productId,
-    variantId,
   }
 });

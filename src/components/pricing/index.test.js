@@ -1,6 +1,12 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import Pricing from './index';
+import {
+    StyleMeasurement, 
+    StyledSaleText,
+    StyledPrice,
+    StyledSalePrice
+  } from './styles';
 
 describe('Pricing component', () => {
   describe('Standard pricing', () => {
@@ -21,11 +27,11 @@ describe('Pricing component', () => {
     });
 
     it('should display mesurement', () => {
-      expect(context.find('.pricing__measurement').text()).to.eql(pricing.measurement.displayName);
+      expect(context.find(StyleMeasurement).text()).to.eql(pricing.pricePerUnit);
     });
 
     it('should display the price', () => {
-      expect(context.find('.pricing__price').text()).to.eql('£9.00');
+      expect(context.find(StyledPrice).text()).to.eql('£9.00');
     });
   });
 
@@ -39,6 +45,7 @@ describe('Pricing component', () => {
         pence: 800
       },
       saleText: 'saleText',
+      pricePerUnit: 'pricePerUnit'
     };
     let context;
     
@@ -47,15 +54,15 @@ describe('Pricing component', () => {
     });
 
     it('should display the price', () => {
-      expect(context.find('.pricing__price').text()).to.eql('£8.00');
+      expect(context.find(StyledPrice).text()).to.eql('£8.00');
     });
 
     it('should display the  sale price', () => {
-      expect(context.find('.pricing__sale_price').text()).to.eql('£9.00');
+      expect(context.find(StyledSalePrice).text()).to.eql('£9.00');
     });
 
     it('should display the saletext', () => {
-      expect(context.find('.pricing__sale_text').text()).to.eql(pricing.saleText);
+      expect(context.find(StyledSaleText).text()).to.eql(pricing.saleText);
     });
   });
 });

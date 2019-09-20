@@ -48,26 +48,4 @@ describe('Product actions', () => {
       expect(action.payload.msg).to.eql(msg);
     });
   });
-
-  describe('selectProductVariantAction' , () => {
-    let action;
-    const productId = 1;
-    const variantId = 2;
-
-    beforeAll(() => {
-      action = selectProductVariantAction(productId, variantId);
-    });
-
-    it('should set type SELECT_PRODUCT_VARIANT', () => {
-      expect(action.type).to.equal('SELECT_PRODUCT_VARIANT');
-    });
-
-    it('should set variantId provided on the payload', () => {
-      expect(action.payload.variantId).to.eql(variantId);
-    });
-
-    it('should set productId provided on the payload', () => {
-      expect(action.payload.productId).to.eql(productId);
-    });
-  });
 });

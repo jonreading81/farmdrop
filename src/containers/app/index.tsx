@@ -1,45 +1,63 @@
 import React from 'react';
-import {getProductsRequestAction, selectProductVariantAction} from '../../actions/product';
+import {getProductsRequestAction} from '../../actions/product';
+import {addItemToBasketAction, removeItemToBasketAction} from '../../actions/basket';
 import { connect } from 'react-redux';
 import ProductGrid from '../../components/product-grid';
+import Header from '../../components/header';
 import {IApplicationState} from '../../types';
-import {IProduct, IGetProductsRequestAction, ISelectProductVariantAction} from '../../types/product';
+import {IProduct, IGetProductsRequestAction} from '../../types/product';
+import {IBasketItem} from '../../types/basket';
+import {IRemoveItemFromBasketAction, IAddItemToBasketAction} from '../../types/basket';
+import {StyledAppContentWrapper} from './styles';
 import 'normalize.css';
 import '../../styles/main.css';
 
 interface IAppProps {
   getProductsRequestAction(): IGetProductsRequestAction,
-  selectProductVariantAction(): ISelectProductVariantAction, 
+  addItemToBasketAction(): IAddItemToBasketAction,
+  removeItemToBasketAction(): IRemoveItemFromBasketAction,
   products: IProduct[],
+  basketItems: IBasketItem[],
   isLoading: Boolean,
   isError: Boolean
 };
 
 const App: React.FC <IAppProps> = ({
   getProductsRequestAction, 
-  selectProductVariantAction,
+  addItemToBasketAction,
+  removeItemToBasketAction,
   products,
+  basketItems,
   isLoading,
   isError
 }) => (
-  <ProductGrid 
+  <div>
+    <Header basketItems={basketItems}/>
+    <StyledAppContentWrapper>
+    <ProductGrid 
     getProducts={getProductsRequestAction} 
-    selectVariant={selectProductVariantAction}
+    addToBasket={addItemToBasketAction}
+    removeFromBasket={removeItemToBasketAction}
     products={products}
     isLoading={isLoading}
     isError={isError}
+    basketItems={basketItems}
   />
+  </StyledAppContentWrapper>
+  </div>
 );
 
 const mapStateToProps = (state: IApplicationState) => ({
   products: state.products.items,
+  basketItems: state.basket.items,
   isLoading: state.products.isLoading,
   isError: state.products.isError
 });
 
 const mapDispatch = {
   getProductsRequestAction,
-  selectProductVariantAction
+  addItemToBasketAction,
+  removeItemToBasketAction,
 };
 
 export default connect(mapStateToProps, mapDispatch)(App);

@@ -1,7 +1,9 @@
 import { IProductsState } from './product';
+import { IBasketState } from './basket';
 
 export interface IApplicationState {
-  products: IProductsState
+  products: IProductsState,
+  basket: IBasketState,
 }
 
 export interface IMedia {

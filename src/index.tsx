@@ -10,6 +10,9 @@ const initalState = {
     isLoading: false,
     isError: false,
   },
+  basket: {
+    items:[]
+  }
 };
 
 const store = configureStore(initalState);

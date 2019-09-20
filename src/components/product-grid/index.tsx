@@ -1,49 +1,34 @@
 import React , {useEffect} from 'react';
-import styled from 'styled-components';
 import {IProduct} from '../../types/product';
+import {IBasketItem} from '../../types/basket';
 import ProductCard from '../product-card';
 import Loader from '../loader';
 import ErrorMessage from '../error';
-import breakpoints from '../../constants/breakpoints';
-
-const StyledProductGrid = styled.ul`
-  display: grid;
-  grid-gap: 1.5rem;
-  grid-auto-rows: 1fr;
-  grid-template-columns: 1fr;
-  list-style-type: none;
-  margin: 0;
-  padding:0;
-  @media ${breakpoints[0]} {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  @media ${breakpoints[1]} {
-    grid-template-columns: repeat(3, 1fr);
-  }
-  @media ${breakpoints[2]} {
-    grid-template-columns: repeat(4, 1fr);
-  }
-`;
+import {StyledProductGrid} from './styles';
 
 interface IProductGridProps {
   products:IProduct[],
+  basketItems: IBasketItem[],
   getProducts():void,
-  selectVariant(): void,
+  addToBasket(): void,
+  removeFromBasket(): void,
   isLoading: Boolean,
   isError: Boolean
 };
 
 const Products: React.FC<IProductGridProps> = ({
   products, 
+  basketItems,
   getProducts,
-  selectVariant,
+  addToBasket,
+  removeFromBasket,
   isLoading,
   isError
 }) => {
 
   useEffect(()  => {
     getProducts();
-  }, []);
+  }, [getProducts]);
 
   return (
     <div>
@@ -52,7 +37,13 @@ const Products: React.FC<IProductGridProps> = ({
       {!isLoading && !isError && (
         <StyledProductGrid>
           {products.map((product, index) => (
-            <li key={index}><ProductCard selectVariant={selectVariant} product={product} /></li>
+            <li key={index}>
+            <ProductCard 
+            addToBasket={addToBasket}
+            removeFromBasket={removeFromBasket}
+            product={product}
+            basketItems={basketItems}
+            /></li>
           ))}
       </StyledProductGrid>
       )}

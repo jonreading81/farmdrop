@@ -14,6 +14,9 @@ describe('App Container', () => {
       items:[],
       isLoading: true,
       isError: true
+    },
+    basket: {
+      items: []
     }
   }
   beforeAll(() => {

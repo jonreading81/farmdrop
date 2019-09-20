@@ -6,6 +6,6 @@ describe('Error component', () => {
   it('should display text provided', () => {
     const text = 'error...';
     const context = shallow(<ErrorMessage text={text} />);
-    expect(context.find('div').first().text()).to.equal(text);
+    expect(context.find('h1').first().text()).to.equal(text);
   });
 });

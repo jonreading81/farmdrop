@@ -1,8 +1,10 @@
 import React from 'react';
 import {shallow} from 'enzyme';
-import ProductCard from './index';
+import ProductCard  from './index';
+import {StyledTitle, StyledProducer} from './styles';
 import Image from '../image';
 import Dropdown from '../dropdown';
+import Pricing from '../pricing';
 import sinon from 'sinon';
 
 describe('ProductCard Component', () => {
@@ -22,12 +24,12 @@ describe('ProductCard Component', () => {
   });
 
   it('should display the name', () => {
-    expect(context.find('h1').first().text()).to.equal(props.product.name);
+    expect(context.find(StyledTitle).text()).to.equal(props.product.name);
   });
 
   it('should display the producer name', () => {
     const name = 'test';
-    expect(context.find('h2').first().text()).to.equal(props.product.producer.name);
+    expect(context.find(StyledProducer).text()).to.equal(props.product.producer.name);
   });
 
   describe('Image Component', () => {
@@ -58,7 +60,6 @@ describe('ProductCard Component', () => {
   });
 
   describe('Dropdown Component', () => {
-    const selectVariant = sinon.spy();
     let props = {
       product: {
         tags: [],
@@ -68,11 +69,14 @@ describe('ProductCard Component', () => {
             measurement: {
               displayName:'displayName'
             }
+          },
+          {
+            measurement: {
+              displayName:'displayName'
+            }
           }
         ],
-        selectedVariant: 1
       },
-      selectVariant
     };
     let context;
 
@@ -85,18 +89,46 @@ describe('ProductCard Component', () => {
 
     it('should set the options', () => {
       expect(context.find(Dropdown).prop('options')).to.eql([
-        {name: props.product.variants[0].measurement.displayName, value:0}
+        {name: props.product.variants[0].measurement.displayName, value:0},
+        {name: props.product.variants[1].measurement.displayName, value:1}
       ]);
     });
+  });
 
-    it('should set the value to selectedVariant', () => {
-      expect(context.find(Dropdown).prop('value')).to.eql(props.product.selectedVariant);
+  describe('Pricing Component', () => {
+    const variant = {
+      pricePerUnit: 'pricePerUnit',
+      measurement: 'measurement',
+      price: 'price',
+      salePrice: 'salePrice',
+      saleText: 'saleText',
+    };
+
+    let props = {
+      product: {
+        tags: [],
+        media: [],
+        variants: [variant],
+      },
+    };
+    let context;
+
+    beforeAll(() => {
+      context=shallow(<ProductCard {...props} />);
+    });
+    it('should construct the  component', () => {
+      expect(context.find(Pricing)).to.have.length(1);
     });
 
-    it('should call selectVariant onChange', () => {
-      const value = '1'
-      context.find(Dropdown).simulate('onChange', '1');
-      expect(props.selectVariant.calledWith(props.product.id, 1));
+    it('should configure the pricing', () => {
+      expect(context.find(Pricing).prop('pricing')).to.eql({
+        pricePerUnit: variant.pricePerUnit,
+        measurement: variant.measurement,
+        price: variant.price,
+        salePrice: variant.salePrice,
+        saleText: variant.saleText,
+      });
     });
   });
+
 });

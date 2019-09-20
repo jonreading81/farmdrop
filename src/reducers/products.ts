@@ -4,13 +4,11 @@ import { IProductsState,
   ProductActions,
   IGetProductsSuccessAction,
   IGetProductsErrorAction,
-  ISelectProductVariantAction,
   GET_PRODUCTS_REQUEST,
   GET_PRODUCTS_SUCCESS,
   GET_PRODUCTS_ERROR,
-  SELECT_PRODUCT_VARIANT,
-  IProduct
-
+  IProduct,
+  IProductVariant
 } from '../types/product';
 
 export const initialState = {
@@ -20,11 +18,33 @@ export const initialState = {
 };
 
 const parseProduct = (product:IProduct, index: number) => {
+  const {
+    pricePerUnit,
+    measurement,
+    price,
+    salePrice,
+    saleText,
+  } = product;
+
+  let variants: IProductVariant[] = [];
+
+  if(Array.isArray(product.variants)) {
+    variants = product.variants.slice(0);
+    variants.unshift({
+      id: 0,
+      pricePerUnit,
+      measurement,
+      price,
+      salePrice,
+      saleText,
+    });
+    variants = variants.map(((variant, index) => ({...variant, id: index})));
+  }
   return {
     ...product,
-    selectedVariant: Array.isArray(product.variants) && product.variants.length && 0,
-    id: index
-  }
+    variants,
+    id: index,
+  };
 };
 
 const parseProducts = (products:IProduct []) => products.map(parseProduct);
@@ -54,27 +74,9 @@ const reducer: Reducer<IProductsState> = (state: IProductsState = initialState, 
         isError: true,
         error: msg
       }
-    case SELECT_PRODUCT_VARIANT:
-      const {productId, variantId} = (action as ISelectProductVariantAction).payload;
-      const items = state.items.slice(0);
-      const product = items[productId];
-      const variant = product.variants[variantId];
-      const productWithVariant ={
-        ...product,
-        pricePerUnit: variant.pricePerUnit,
-        measurement: variant.measurement, 
-        price: variant.price,
-        salePrice: variant.salePrice,
-        saleText: variant.saleText,
-        selectedVariant: variantId,
-      }
-      items[productId] = productWithVariant;
-      return {
-        ...state,
-        items
-      };
     default:
       return state;
   }
 }
+
 export default reducer;
