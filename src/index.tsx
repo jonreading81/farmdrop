@@ -3,16 +3,12 @@ import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux';
 import configureStore from  './store';
 import App from './containers/app';
+import { initialState as productsIntalState } from './reducers/products';
+import { initialState as basketIntalState } from './reducers/basket';
 
 const initalState = {
-  products: {
-    items:[],
-    isLoading: false,
-    isError: false,
-  },
-  basket: {
-    items:[]
-  }
+  products: productsIntalState,
+  basket: basketIntalState,
 };
 
 const store = configureStore(initalState);
